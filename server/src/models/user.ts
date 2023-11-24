@@ -5,7 +5,7 @@ import { IUser } from '../types';
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
+    required: [true, 'username required'],
     minLength: 3,
     unique: true
   },
