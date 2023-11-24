@@ -13,7 +13,7 @@ export interface IUser {
   username: string,
   name: string,
   passwordHash: string,
-  blogs: [Types.ObjectId],
+  blogs?: [Types.ObjectId],
 }
 
 
