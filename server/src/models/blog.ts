@@ -11,7 +11,10 @@ const blogSchema = new Schema<IBlog>({
     require: true
   },
   url: String,
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0
+  },
   comments: [
     {
       type: String
