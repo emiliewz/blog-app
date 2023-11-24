@@ -6,7 +6,15 @@ export interface IBlog {
   url: string,
   likes: number,
   comments: string[],
-  user: Types.ObjectId
+  user: Types.ObjectId,
 }
+
+export interface IUser {
+  username: string,
+  name: string,
+  passwordHash: string,
+  blogs: [Types.ObjectId],
+}
+
 
 
