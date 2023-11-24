@@ -9,11 +9,19 @@ export interface IBlog {
   user: Types.ObjectId,
 }
 
-export interface IUser {
+interface BaseUser {
   username: string,
   name: string,
+}
+
+export interface IUser extends BaseUser {
   passwordHash: string,
   blogs?: [Types.ObjectId],
+}
+
+
+export interface UserEntry extends BaseUser {
+  password: string
 }
 
 
