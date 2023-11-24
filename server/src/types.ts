@@ -5,10 +5,11 @@ interface BaseUser {
   name: string,
 }
 
-interface BaseBlog {
+export interface BaseBlog {
   title: string,
   author: string,
   url: string,
+  likes: number,
 }
 
 export interface IBlog extends BaseBlog {

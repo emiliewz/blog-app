@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import express, { RequestHandler } from 'express';
 import User from '../models/user';
 import { IBlog } from '../types';
-import helper from '../utils/utils';
+import helper from '../utils/helper';
 
 const router = express.Router();
 
