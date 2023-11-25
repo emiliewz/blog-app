@@ -1,6 +1,7 @@
 import express from 'express';
 import blogsRouter from './controllers/blogs';
 import usersRouter from './controllers/users';
+import loginRouter from './controllers/login';
 import mongoose from 'mongoose';
 import config from './utils/config';
 import cors from 'cors';
@@ -20,6 +21,7 @@ app.use(express.json());
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 app.use(cors());
 
+app.use('/api/login', loginRouter);
 app.use('/api/blogs', blogsRouter);
 app.use('/api/users', usersRouter);
 
