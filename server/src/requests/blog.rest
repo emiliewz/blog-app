@@ -1,1 +1,11 @@
 GET http://localhost:3000/api/blogs
+
+###
+POST http://localhost:3000/api/blogs
+Content-Type: application/json
+
+{
+  "author": "Lorem Ipsum",
+  "title": "Lorem ipsum dolor sit amet",
+  "url": "https://www.lipsum.com/feed/html"
+}
