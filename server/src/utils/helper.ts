@@ -6,7 +6,7 @@ const toNewUser = (object: unknown): UserEntry => {
   }
   if ('username' in object && 'name' in object && 'password' in object) {
     const newUserEntry: UserEntry = {
-      username: parseString(object.name),
+      username: parseString(object.username),
       name: parseString(object.name),
       password: parseString(object.password),
     };
