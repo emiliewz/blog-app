@@ -1,4 +1,19 @@
-import { BaseBlog, UserEntry } from '../types';
+import { BaseAuth, BaseBlog, UserEntry } from '../types';
+
+const toNewUser = (object: unknown): UserEntry => {
+  if (!object || typeof object !== 'object') {
+    throw new Error('Incorrect or missing data');
+  }
+  if ('username' in object && 'name' in object && 'password' in object) {
+    const newUserEntry: UserEntry = {
+      username: parseString(object.name),
+      name: parseString(object.name),
+      password: parseString(object.password),
+    };
+    return newUserEntry;
+  }
+  throw new Error('Incorrect data: some fields are missing');
+};
 
 const toNewBlog = (object: unknown): BaseBlog => {
   if (!object || typeof object !== 'object') {
@@ -16,17 +31,16 @@ const toNewBlog = (object: unknown): BaseBlog => {
   throw new Error('Incorrect data: some fields are missing');
 };
 
-const toNewUser = (object: unknown): UserEntry => {
+const toNewAuth = (object: unknown): BaseAuth => {
   if (!object || typeof object !== 'object') {
     throw new Error('Incorrect or missing data');
   }
-  if ('username' in object && 'name' in object && 'password' in object) {
-    const newUserEntry: UserEntry = {
-      username: parseString(object.name),
-      name: parseString(object.name),
+  if ('username' in object && 'password' in object) {
+    const newAuthEntry: BaseAuth = {
+      username: parseString(object.username),
       password: parseString(object.password),
     };
-    return newUserEntry;
+    return newAuthEntry;
   }
   throw new Error('Incorrect data: some fields are missing');
 };
@@ -56,4 +70,5 @@ const parseNumber = (num: unknown): number => {
 export default {
   toNewUser,
   toNewBlog,
+  toNewAuth,
 };

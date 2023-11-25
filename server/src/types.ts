@@ -27,5 +27,10 @@ export interface UserEntry extends BaseUser {
   password: string
 }
 
+export interface BaseAuth {
+  username: string,
+  password: string,
+}
+
 
 
