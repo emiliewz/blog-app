@@ -1,4 +1,4 @@
-import { BaseAuth, BaseBlog, UserEntry } from '../types';
+import { BaseAuth, BaseBlog, UserEntry, BaseComment } from '../types';
 
 const toNewUser = (object: unknown): UserEntry => {
   if (!object || typeof object !== 'object') {
@@ -67,8 +67,22 @@ const parseNumber = (num: unknown): number => {
   return num;
 };
 
+const toNewComent = (object: unknown): BaseComment => {
+  if (!object || typeof object !== 'object') {
+    throw new Error('Incorrect or missing data');
+  }
+  if ('comment' in object) {
+    const newCommentEntry: BaseComment = {
+      comment: parseString(object.comment),
+    };
+    return newCommentEntry;
+  }
+  throw new Error('Incorrect data: some fields are missing');
+};
+
 export default {
   toNewUser,
   toNewBlog,
   toNewAuth,
+  toNewComent,
 };
