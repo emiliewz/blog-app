@@ -20,7 +20,7 @@ export interface IBlog extends BaseBlog {
 
 export interface IUser extends BaseUser {
   passwordHash: string,
-  blogs?: [Types.ObjectId],
+  blogs: Types.ObjectId[],
 }
 
 export interface UserEntry extends BaseUser {
