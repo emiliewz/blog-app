@@ -38,4 +38,14 @@ router.post('/', userExtractor, (async (req: CustomReq, res) => {
   return res.status(201).json(createdBlog);
 }) as RequestHandler);
 
+router.put('/:id', (async (req, res) => {
+  const { title, author, url } = helper.toNewBlog(req.body);
+  await Blog.findByIdAndUpdate(req.params.id, {
+    title, author, url
+  }, { new: true });
+
+  const updatedBlog = await Blog.findById(req.params.id).populate<{ user: IUser }>('user', { username: 1, name: 1 });
+  res.json(updatedBlog);
+}) as RequestHandler);
+
 export default router;

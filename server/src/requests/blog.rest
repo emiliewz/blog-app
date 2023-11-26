@@ -3,10 +3,21 @@ GET http://localhost:3000/api/blogs
 ###
 POST http://localhost:3000/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDA5NTkzMDMsImV4cCI6MTcwMDk2MjkwM30.eMYZG6kIPp2YZa25h5UKyOhQst0PiwWk-Mz5I1kpIUI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDA5NzQzMjIsImV4cCI6MTcwMDk3NzkyMn0.PCBRZrk74WhfUzw7h8hcWEh2ugmh6l9wqyPKZTLPs2g
 
 {
   "author": "Lorem Ipsum Lorem Ipsum",
+  "title": "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
+  "url": "https://www.lipsum.com/feed/html"
+}
+
+###
+PUT http://localhost:3000/api/blogs/6562ceff30deae7625c8b484
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDA5NzQzMjIsImV4cCI6MTcwMDk3NzkyMn0.PCBRZrk74WhfUzw7h8hcWEh2ugmh6l9wqyPKZTLPs2g
+
+{
+  "author": "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
   "title": "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
   "url": "https://www.lipsum.com/feed/html"
 }
