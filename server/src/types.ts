@@ -32,5 +32,8 @@ export interface BaseAuth {
   password: string,
 }
 
+export interface BaseComment {
+  comment: string,
+}
 
 
