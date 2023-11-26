@@ -3,7 +3,7 @@ GET http://localhost:3000/api/blogs
 ###
 POST http://localhost:3000/api/blogs
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDEwMzA3OTMsImV4cCI6MTcwMTAzNDM5M30.5uy_JVu1Hbzdlrgydg8HaWU6CcVYzUP6YfnGzXSCGbk
+Authorization: Bearer 
 
 {
   "author": "Lorem Ipsum Lorem Ipsum",
@@ -12,17 +12,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZ
 }
 
 ###
-PUT http://localhost:3000/api/blogs/6562ceff30deae7625c8b484
+PUT http://localhost:3000/api/blogs/656138f861b2f0e9a41adfeb
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDEwMzA3OTMsImV4cCI6MTcwMTAzNDM5M30.5uy_JVu1Hbzdlrgydg8HaWU6CcVYzUP6YfnGzXSCGbk
+Authorization: Bearer 
 
 {
-  "author": "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+  "author": "Lorem Ipsum Lorem Ipsum",
   "title": "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet",
   "url": "https://www.lipsum.com/feed/html"
 }
 
 ###
-DELETE http://localhost:3000/api/blogs/6562ceff30deae7625c8b484
+DELETE http://localhost:3000/api/blogs/6563aec1dc1a12f4e49af2a5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiaWQiOiI2NTYxNDMzZWEyZmVjNWNmYTRmNWRmZjQiLCJpYXQiOjE3MDEwMzA3OTMsImV4cCI6MTcwMTAzNDM5M30.5uy_JVu1Hbzdlrgydg8HaWU6CcVYzUP6YfnGzXSCGbk
+Authorization: Bearer 
+
+### 
+POST http://localhost:3000/api/blogs/656294824bc59da3a48d01b7/comments
+Content-Type: application/json
+Authorization: Bearer 
+
+{
+  "comment": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+}

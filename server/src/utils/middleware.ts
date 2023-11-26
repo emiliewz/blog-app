@@ -45,7 +45,26 @@ const userExtractor = async (req: Request, res: Response, next: NextFunction) =>
   next();
 };
 
+const unknownEndPoint = (_req: Request, res: Response) => {
+  res.status(404).send({ error: 'unknown endpoint' });
+};
+
+const errorHandler = (error: Error, _req: Request, res: Response, next: NextFunction) => {
+  if (error.name === 'CastError') {
+    res.status(400).send({ error: 'malformatted id' });
+  } else if (error.name === 'ValidationError') {
+    res.status(400).json({ error: error.message });
+  } else if (error.name === 'JsonWebTokenError') {
+    res.status(401).json({ error: 'invalid token' });
+  } else if (error.name === 'TokenExpiredError') {
+    res.status(401).json({ error: 'token expired' });
+  }
+  next(error);
+};
+
 export {
   tokenExtractor,
   userExtractor,
+  unknownEndPoint,
+  errorHandler,
 };
