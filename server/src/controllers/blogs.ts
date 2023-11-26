@@ -16,55 +16,103 @@ router.get('/', (async (_req, res) => {
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.post('/', userExtractor, (async (req: CustomReq, res) => {
-  const { title, author, url } = helper.toNewBlog(req.body);
-  const user = req.user;
+  try {
+    const { title, author, url } = helper.toNewBlog(req.body);
+    const user = req.user;
 
-  if (!user) {
-    return res.status(401).json({ error: 'operation not permitted' });
+    if (!user) {
+      return res.status(401).json({ error: 'operation not permitted' });
+    }
+
+    const blog = new Blog({
+      title, author, url,
+      user: user._id
+    });
+
+    await blog.save();
+
+    user.blogs = user.blogs.concat(blog._id);
+    await user.save();
+
+    const createdBlog = blog.populate<{ user: IUser }>('user', { username: 1, name: 1 });
+
+    return res.status(201).json(createdBlog);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return res.status(400).send(errorMessage);
   }
-
-  const blog = new Blog({
-    title, author, url,
-    user: user._id
-  });
-
-  await blog.save();
-
-  user.blogs = user.blogs.concat(blog._id);
-  await user.save();
-
-  const createdBlog = blog.populate<{ user: IUser }>('user', { username: 1, name: 1 });
-
-  return res.status(201).json(createdBlog);
 }) as RequestHandler);
 
 router.put('/:id', (async (req, res) => {
-  const { title, author, url } = helper.toNewBlog(req.body);
+  try {
+    const { title, author, url } = helper.toNewBlog(req.body);
 
-  await Blog.findByIdAndUpdate(req.params.id, {
-    title, author, url
-  }, { new: true });
+    await Blog.findByIdAndUpdate(req.params.id, {
+      title, author, url
+    }, { new: true });
 
-  const updatedBlog = await Blog.findById(req.params.id).populate<{ user: IUser }>('user', { username: 1, name: 1 });
+    const updatedBlog = await Blog.findById(req.params.id).populate<{ user: IUser }>('user', { username: 1, name: 1 });
 
-  res.json(updatedBlog);
+    return res.json(updatedBlog);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return res.status(400).send(errorMessage);
+  }
 }) as RequestHandler);
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.delete('/:id', userExtractor, (async (req: CustomReq, res) => {
-  const user = req.user;
-  const blog = await Blog.findById(req.params.id);
-  if (!user || blog?.user.toString() !== user._id.toString()) {
-    return res.status(401).json({ error: 'operation not permitted' });
+  try {
+    const user = req.user;
+    const blog = await Blog.findById(req.params.id);
+
+    if (!user || blog?.user.toString() !== user._id.toString()) {
+      return res.status(401).json({ error: 'operation not permitted' });
+    } else if (!blog) {
+      return res.status(400).json({ error: 'blog not find' });
+    }
+
+    user.blogs = user.blogs.filter(b => b.toString() !== blog._id.toString());
+
+    await user.save();
+
+    await blog.deleteOne();
+
+    return res.status(204).end();
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return res.status(400).send(errorMessage);
   }
+}) as RequestHandler);
 
-  user.blogs = user.blogs.filter(b => b.toString() !== blog._id.toString());
+router.post('/:id/comments', (async (req, res) => {
+  try {
+    const { comment } = helper.toNewComent(req.body);
 
-  await user.save();
+    const blog = await Blog.findById(req.params.id);
 
-  await blog.deleteOne();
+    if (!blog) return res.status(400).json({ error: 'blog not found' });
+    blog.comments = blog.comments.concat(comment);
 
-  return res.status(204).end();
+    await blog.save();
+
+    return res.json(blog);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return res.status(400).send(errorMessage);
+  }
 }) as RequestHandler);
 
 export default router;
