@@ -5,6 +5,7 @@ import loginRouter from './controllers/login';
 import mongoose from 'mongoose';
 import config from './utils/config';
 import cors from 'cors';
+import { tokenExtractor } from './utils/middleware';
 
 const app = express();
 
@@ -20,6 +21,7 @@ mongoose.connect(config.MONGODB_URI)
 app.use(express.json());
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 app.use(cors());
+app.use(tokenExtractor);
 
 app.use('/api/login', loginRouter);
 app.use('/api/blogs', blogsRouter);
