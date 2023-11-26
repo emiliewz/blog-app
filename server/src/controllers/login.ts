@@ -22,7 +22,7 @@ router.post('/', (async (req, res) => {
     });
   }
 
-  const userForToken = {
+  const userForToken: jwt.UserForTokenPayload = {
     username: user.username,
     id: user._id,
   };
