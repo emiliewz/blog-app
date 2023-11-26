@@ -40,12 +40,31 @@ router.post('/', userExtractor, (async (req: CustomReq, res) => {
 
 router.put('/:id', (async (req, res) => {
   const { title, author, url } = helper.toNewBlog(req.body);
+
   await Blog.findByIdAndUpdate(req.params.id, {
     title, author, url
   }, { new: true });
 
   const updatedBlog = await Blog.findById(req.params.id).populate<{ user: IUser }>('user', { username: 1, name: 1 });
+
   res.json(updatedBlog);
+}) as RequestHandler);
+
+// eslint-disable-next-line @typescript-eslint/no-misused-promises
+router.delete('/:id', userExtractor, (async (req: CustomReq, res) => {
+  const user = req.user;
+  const blog = await Blog.findById(req.params.id);
+  if (!user || blog?.user.toString() !== user._id.toString()) {
+    return res.status(401).json({ error: 'operation not permitted' });
+  }
+
+  user.blogs = user.blogs.filter(b => b.toString() !== blog._id.toString());
+
+  await user.save();
+
+  await blog.deleteOne();
+
+  return res.status(204).end();
 }) as RequestHandler);
 
 export default router;
