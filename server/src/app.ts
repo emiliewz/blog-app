@@ -5,7 +5,7 @@ import loginRouter from './controllers/login';
 import mongoose from 'mongoose';
 import config from './utils/config';
 import cors from 'cors';
-import { tokenExtractor } from './utils/middleware';
+import { errorHandler, tokenExtractor, unknownEndPoint } from './utils/middleware';
 
 const app = express();
 
@@ -30,5 +30,8 @@ app.use('/api/users', usersRouter);
 app.get('/version', (_req, res) => {
   res.send('1');
 });
+
+app.use(unknownEndPoint);
+app.use(errorHandler);
 
 export default app;
