@@ -15,7 +15,7 @@ declare module 'jsonwebtoken' {
 
 export interface CustomReq extends Request {
   token?: string | null,
-  user?: Document<unknown, Record<string, never>, IUser> & IUser & { _id: Types.ObjectId } | null
+  user?: Document<unknown, unknown, IUser> & IUser & { _id: Types.ObjectId } | null
 }
 
 const asyncHandler = (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) => {
