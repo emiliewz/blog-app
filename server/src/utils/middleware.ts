@@ -69,6 +69,8 @@ const errorHandler = (error: Error, _req: Request, res: Response, next: NextFunc
     res.status(401).json({ error: 'invalid token' });
   } else if (error.name === 'TokenExpiredError') {
     res.status(401).json({ error: 'token expired' });
+  } else if (error.name === 'DataEntryError') {
+    res.status(400).json({ error: error.message });
   }
   next(error);
 };
