@@ -1,4 +1,5 @@
 import Blog from '../models/blog';
+import User from '../models/user';
 import { BaseBlog, UserEntry } from '../types';
 
 export const initialBlogs: BaseBlog[] = [
@@ -56,4 +57,9 @@ export const initialUsers: UserEntry[] = [
 export const blogsInDb = async () => {
   const blogs = await Blog.find({});
   return blogs;
+};
+
+export const usersInDb = async () => {
+  const users = await User.find({});
+  return users;
 };
