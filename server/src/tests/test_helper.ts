@@ -19,13 +19,24 @@ export const initialBlogs: BaseBlog[] = [
     author: 'Edsger W. Dijkstra',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 5,
+  },
+  {
+    title: 'React patterns',
+    author: 'Michael Chan',
+    url: 'https://reactpatterns.com/',
+    likes: 7,
   }
 ];
 
 export const initialUsers: UserEntry[] = [
   {
-    username: 'mluukka',
-    name: 'mluukka',
+    username: 'emilie',
+    name: 'emilie',
+    password: 'secret',
+  },
+  {
+    username: 'zhang',
+    name: 'zhang',
     password: 'secret',
   }
 ];
