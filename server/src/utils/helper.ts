@@ -1,8 +1,14 @@
 import { BaseAuth, BaseBlog, UserEntry, BaseComment } from '../types';
 
+const DataEntryError = (message: string): Error => {
+  const e = new Error(message);
+  e.name = 'DataEntryError';
+  return e;
+};
+
 const toNewUser = (object: unknown): UserEntry => {
   if (!object || typeof object !== 'object') {
-    throw new Error('Incorrect or missing data');
+    throw DataEntryError('Incorrect or missing data');
   }
   if ('username' in object && 'name' in object && 'password' in object) {
     const newUserEntry: UserEntry = {
@@ -12,12 +18,12 @@ const toNewUser = (object: unknown): UserEntry => {
     };
     return newUserEntry;
   }
-  throw new Error('Incorrect data: some fields are missing');
+  throw DataEntryError('Incorrect data: some fields are missing');
 };
 
 const toNewBlog = (object: unknown): BaseBlog => {
   if (!object || typeof object !== 'object') {
-    throw new Error('Incorrect or missing data');
+    throw DataEntryError('Incorrect or missing data');
   }
   if ('title' in object && 'author' in object && 'url' in object) {
     const newBlogEntry: BaseBlog = {
@@ -28,12 +34,12 @@ const toNewBlog = (object: unknown): BaseBlog => {
     };
     return newBlogEntry;
   }
-  throw new Error('Incorrect data: some fields are missing');
+  throw DataEntryError('Incorrect data: some fields are missing');
 };
 
 const toNewAuth = (object: unknown): BaseAuth => {
   if (!object || typeof object !== 'object') {
-    throw new Error('Incorrect or missing data');
+    throw DataEntryError('Incorrect or missing data');
   }
   if ('username' in object && 'password' in object) {
     const newAuthEntry: BaseAuth = {
@@ -42,7 +48,7 @@ const toNewAuth = (object: unknown): BaseAuth => {
     };
     return newAuthEntry;
   }
-  throw new Error('Incorrect data: some fields are missing');
+  throw DataEntryError('Incorrect data: some fields are missing');
 };
 
 const isString = (text: unknown): text is string => {
@@ -51,7 +57,7 @@ const isString = (text: unknown): text is string => {
 
 const parseString = (text: unknown): string => {
   if (!isString(text)) {
-    throw new Error(`Incorrect or missing ${text}`);
+    throw DataEntryError(`Incorrect or missing ${text}`);
   }
   return text;
 };
@@ -62,14 +68,14 @@ const isNumber = (num: unknown): num is number => {
 
 const parseNumber = (num: unknown): number => {
   if (!isNumber(num)) {
-    throw new Error(`Incorrect or missing ${num}`);
+    throw DataEntryError(`Incorrect or missing ${num}`);
   }
   return num;
 };
 
 const toNewComent = (object: unknown): BaseComment => {
   if (!object || typeof object !== 'object') {
-    throw new Error('Incorrect or missing data');
+    throw DataEntryError('Incorrect or missing data');
   }
   if ('comment' in object) {
     const newCommentEntry: BaseComment = {
@@ -77,7 +83,7 @@ const toNewComent = (object: unknown): BaseComment => {
     };
     return newCommentEntry;
   }
-  throw new Error('Incorrect data: some fields are missing');
+  throw DataEntryError('Incorrect data: some fields are missing');
 };
 
 export default {
