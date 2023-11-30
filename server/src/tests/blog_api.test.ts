@@ -184,8 +184,24 @@ describe('blogs api', () => {
       expect(blogsAfter).toHaveLength(blogsBefore.length);
     });
 
-  });
+    describe('a comment', () => {
+      const comment: string = 'Your perspective is eye-opening.';
+      test('can be posted on a blog with a valid token', async () => {
+        await api
+          .post(`/api/blogs/${id}/comments`)
+          .set('Authorization', authHeader)
+          .send({ comment })
+          .expect(200);
+      });
 
+      test('can not be posted if a token is not provided', async () => {
+        await api
+          .post(`/api/blogs/${id}/comments`)
+          .send({ comment })
+          .expect(401);
+      });
+    });
+  });
 });
 
 
