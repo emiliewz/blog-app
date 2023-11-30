@@ -4,6 +4,7 @@ import app from '../app';
 import Blog from '../models/blog';
 import User from '../models/user';
 import { blogsInDb, initialBlogs, initialUsers } from './test_helper';
+import { IBlog } from '../types';
 const api = supertest(app);
 
 describe('blogs api', () => {
@@ -105,6 +106,86 @@ describe('blogs api', () => {
       expect(result.body.error).toContain('operation not permitted');
     });
   });
+
+  describe('when there are blogs saved', () => {
+    beforeEach(async () => {
+      await Blog.deleteMany({});
+
+      await Promise.all(initialBlogs.map(blog =>
+        api.post('/api/blogs')
+          .set('Authorization', authHeader)
+          .send(blog)));
+    });
+
+    test('blogs are returned as json', async () => {
+      await api.get('/api/blogs')
+        .expect(200)
+        .expect('Content-Type', /application\/json/);
+    });
+
+    test('all blogs are returned', async () => {
+      const response = await api.get('/api/blogs');
+      expect(response.body).toHaveLength(initialBlogs.length);
+    });
+  });
+
+  describe('a blog', () => {
+    let id: string;
+    let blogsBefore: (mongoose.Document<unknown, unknown, IBlog> & IBlog & { _id: mongoose.Types.ObjectId })[];
+    beforeEach(async () => {
+      await Blog.deleteMany({});
+      await api.post('/api/blogs')
+        .set('Authorization', authHeader)
+        .send(initialBlogs[3]);
+
+      blogsBefore = await blogsInDb();
+      id = blogsBefore[0]._id.toString();
+    });
+
+    test('can be edited', async () => {
+      const modifiedBlog = { title: 'new title', author: 'author', url: 'url', likes: 12 };
+      await api.put(`/api/blogs/${id}`)
+        .set('Authorization', authHeader)
+        .send(modifiedBlog)
+        .expect(200);
+    });
+
+    test('can be deleted by the creator', async () => {
+      await api
+        .delete(`/api/blogs/${id}`)
+        .auth(token, { type: 'bearer' })
+        .expect(204);
+
+      const blogsAfter = await blogsInDb();
+      expect(blogsAfter).toHaveLength(blogsBefore.length - 1);
+    });
+
+    test('can not be deleted without valid auth header', async () => {
+      await api
+        .delete(`/api/blogs/${id}`)
+        .expect(401);
+
+      const blogsAfter = await blogsInDb();
+      expect(blogsAfter).toHaveLength(blogsBefore.length);
+    });
+
+    test('can not be deleted by other user', async () => {
+      const user = initialUsers[1];
+      await api.post('/api/users').send(user);
+      const response = await api.post('/api/login').send(user).expect(200);
+      const newAuthHeader = `Bearer ${response.body.token}`;
+
+      await api
+        .delete(`/api/blogs/${id}`)
+        .set('Authorization', newAuthHeader)
+        .expect(401);
+
+      const blogsAfter = await blogsInDb();
+      expect(blogsAfter).toHaveLength(blogsBefore.length);
+    });
+
+  });
+
 });
 
 
