@@ -3,53 +3,110 @@ import supertest from 'supertest';
 import app from '../app';
 import Blog from '../models/blog';
 import User from '../models/user';
-
-interface InitialBlogEntry {
-  title: string,
-  author: string,
-  url: string,
-  likes: number
-}
-
-interface InitialUserEntry {
-  username: string,
-  password: string,
-}
+import { blogsInDb, initialBlogs, initialUsers } from './test_helper';
 const api = supertest(app);
 
-const initialBlogs: InitialBlogEntry[] = [
-  {
-    title: 'Canonical string reduction',
-    author: 'Edsger W. Dijkstra',
-    url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
-    likes: 12,
-  },
-  {
-    title: 'First class tests',
-    author: 'Robert C. Martin',
-    url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
-    likes: 10,
-  },
-];
+describe('blogs api', () => {
+  let authHeader: string;
+  let token: string;
 
-const initialUsers: InitialUserEntry[] = [
-  {
-    username: 'mluukka',
-    password: 'secret',
-  }
-];
+  beforeEach(async () => {
+    await User.deleteMany({});
 
-test('blogs are returned as json', async () => {
-  await Blog.deleteMany({});
-  await User.deleteMany({});
-  await Blog.insertMany(initialBlogs);
-  await api.post('/api/users').send(initialUsers[0]);
+    const user = initialUsers[0];
+    await api.post('/api/users').send(user);
+    const response = await api.post('/api/login').send(user);
 
-  await api.get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    token = response.body.token;
+    // both of those two, token || authHeader, are ok to set authorization in request header
+    authHeader = `Bearer ${response.body.token}`;
+  });
 
+  describe('a new blog', () => {
+    const blog = initialBlogs[2];
+
+    beforeEach(async () => {
+      await Blog.deleteMany({});
+    });
+
+    test('can be added', async () => {
+      await api.post('/api/blogs')
+        .set('Authorization', authHeader)
+        .send(blog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+
+      const blogs = await blogsInDb();
+      expect(blogs).toHaveLength(1);
+      const titles = blogs.map(r => r.title);
+      expect(titles).toContain(blog.title);
+    });
+
+    test('has field id', async () => {
+      await api.post('/api/blogs')
+        .set('Authorization', authHeader)
+        .send(blog)
+        .expect(201);
+
+      const blogs = await api.get('/api/blogs');
+      expect(blogs.body[0].id).toBeDefined();
+    });
+
+    test('has likes initialized to 0 if initial value is not given', async () => {
+      const blog = {
+        title: 'Go To Statement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      };
+
+      const response = await api
+        .post('/api/blogs')
+        .auth(token, { type: 'bearer' })
+        .send(blog)
+        .expect(201);
+
+      expect(response.body.likes).toBe(0);
+    });
+
+    test('if title is missing, creation fails', async () => {
+      const blog = {
+        author: 'Edsger W. Dijkstra',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      };
+
+      await api.post('/api/blogs')
+        .auth(token, { type: 'bearer' })
+        .send(blog)
+        .expect(400);
+
+    });
+
+    test('if author is missing, creation fails', async () => {
+      const blog = {
+        title: 'Go To Statement Considered Harmful',
+        url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+      };
+
+      await api
+        .post('/api/blogs')
+        .set('Authorization', authHeader)
+        .send(blog)
+        .expect(400);
+    });
+
+    test('fails with status code 401 if a token is not provided', async () => {
+      const blog = initialBlogs[2];
+
+      const result = await api.post('/api/blogs')
+        .send(blog)
+        .expect(401);
+
+      expect(result.body.error).toContain('operation not permitted');
+    });
+  });
 });
+
 
 afterAll(async () => {
   await mongoose.connection.close();
