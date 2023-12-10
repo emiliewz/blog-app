@@ -63,8 +63,11 @@ const blogSlice = createSlice({
     create(state, { payload }: PayloadAction<blogSliceState>) {
       return state.concat(payload);
     },
+    update(state, { payload }: PayloadAction<blogSliceState>) {
+      return state.map(b => b.id !== payload.id ? b : payload);
+    }
   }
 });
 
-export const { set, create } = blogSlice.actions;
+export const { set, create, update } = blogSlice.actions;
 export default blogSlice.reducer;
