@@ -1,23 +1,34 @@
-import blogReducer, { blogSliceState } from './blogs'
-import deepFreeze from 'deep-freeze'
+import blogReducer, { blogSliceState, initialState } from './blogs';
+import deepFreeze from 'deep-freeze';
 
 describe('blogReducer', () => {
-  test('returns new state with action blogs/create', () => {
-    const state: blogSliceState[] = []
+  test('return all initial blogs with action blogs/set', () => {
+    const state: blogSliceState[] = [];
     const action = {
       type: 'blogs/create',
-      payload: {
-        title: 'Canonical string reduction',
-        author: 'Edsger W. Dijkstra',
-        url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
-        likes: 12,
-      },
-    }
+      payload: initialState
+    };
 
-    deepFreeze(state)
-    const newState = blogReducer(state, action)
+    deepFreeze(state);
+    const newState = blogReducer(state, action);
 
-    expect(newState).toHaveLength(1)
-    expect(newState).toContainEqual(action.payload)
-  })
-})
+    expect(newState).toHaveLength(initialState.length);
+    expect(newState).toEqual(initialState);
+  });
+
+  test('returns new state with action blogs/create', () => {
+    const state: blogSliceState[] = [];
+    const action = {
+      type: 'blogs/create',
+      payload: initialState[0],
+    };
+
+    deepFreeze(state);
+    const newState = blogReducer(state, action);
+
+    expect(newState).toHaveLength(1);
+    expect(newState).toContainEqual(action.payload);
+  });
+
+
+});
