@@ -1,20 +1,24 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export type blogSliceState = {
+export interface blogSliceState {
   title: string,
   author: string,
   url: string,
   likes: number,
+  comments: string[],
+  user: string,
   id: number
-};
+}
 
-export const initialState = [
+export const initialState: blogSliceState[] = [
   {
     id: 0,
     title: 'Canonical string reduction',
     author: 'Edsger W. Dijkstra',
     url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
     likes: 12,
+    user: 'Alice',
+    comments: []
   },
   {
     id: 1,
@@ -22,6 +26,8 @@ export const initialState = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
+    user: 'Alice',
+    comments: []
   },
   {
     id: 2,
@@ -29,6 +35,8 @@ export const initialState = [
     author: 'Edsger W. Dijkstra',
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 5,
+    user: 'Bob',
+    comments: []
   },
   {
     id: 3,
@@ -36,6 +44,8 @@ export const initialState = [
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
     likes: 7,
+    user: 'Bob',
+    comments: []
   },
   {
     id: 4,
@@ -43,6 +53,8 @@ export const initialState = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
+    user: 'Charles',
+    comments: []
   },
   {
     id: 5,
@@ -50,6 +62,8 @@ export const initialState = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
+    user: 'Charles',
+    comments: []
   }
 ];
 
