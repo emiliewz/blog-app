@@ -48,4 +48,18 @@ describe('usersReducer', () => {
     expect(newState).not.toContainEqual(initialState[1]);
   });
 
+  test('delete user with action users/remove', () => {
+    const state: usersSliceState[] = initialState;
+    const action = {
+      type: 'users/remove',
+      payload: '2'
+    };
+
+    deepFreeze(state);
+    const newState = usersReducer(state, action);
+
+    expect(newState).toHaveLength(initialState.length - 1);
+    expect(newState).not.toContainEqual(initialState[2]);
+  });
+
 });
