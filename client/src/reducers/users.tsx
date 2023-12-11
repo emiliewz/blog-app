@@ -36,11 +36,14 @@ const usersSlice = createSlice({
   reducers: {
     set(_state, { payload }: PayloadAction<usersSliceState[]>) {
       return payload;
+    },
+    create(state, { payload }: PayloadAction<usersSliceState>) {
+      return state.concat(payload);
     }
   }
 });
 
-export const { set } = usersSlice.actions;
+export const { set, create } = usersSlice.actions;
 
 export default usersSlice.reducer;
 
