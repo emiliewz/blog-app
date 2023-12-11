@@ -43,11 +43,15 @@ const usersSlice = createSlice({
     update(state, { payload }: PayloadAction<usersSliceState>) {
       const blog = payload;
       return state.map(u => u.id !== blog.id ? u : blog);
+    },
+    remove(state, { payload }: PayloadAction<string>) {
+      const id = payload;
+      return state.filter(u => u.id !== id);
     }
   }
 });
 
-export const { set, create, update } = usersSlice.actions;
+export const { set, create, update, remove } = usersSlice.actions;
 
 export default usersSlice.reducer;
 
