@@ -30,4 +30,22 @@ describe('usersReducer', () => {
     expect(newState).toContainEqual(initialState[0]);
   });
 
+  test('return updated state with action users/update', () => {
+    const state: usersSliceState[] = initialState.slice(0, 2);
+
+    const userToUpdate = { ...initialState[1], name: 'Linda' };
+
+    const action = {
+      type: 'users/update',
+      payload: userToUpdate
+    };
+
+    deepFreeze(state);
+    const newState = usersReducer(state, action);
+
+    expect(newState).toHaveLength(2);
+    expect(newState).toContainEqual(userToUpdate);
+    expect(newState).not.toContainEqual(initialState[1]);
+  });
+
 });
