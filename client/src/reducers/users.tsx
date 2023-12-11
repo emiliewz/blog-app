@@ -39,11 +39,15 @@ const usersSlice = createSlice({
     },
     create(state, { payload }: PayloadAction<usersSliceState>) {
       return state.concat(payload);
+    },
+    update(state, { payload }: PayloadAction<usersSliceState>) {
+      const blog = payload;
+      return state.map(u => u.id !== blog.id ? u : blog);
     }
   }
 });
 
-export const { set, create } = usersSlice.actions;
+export const { set, create, update } = usersSlice.actions;
 
 export default usersSlice.reducer;
 
