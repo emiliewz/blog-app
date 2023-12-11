@@ -1,3 +1,4 @@
+import deepFreeze from 'deep-freeze';
 import userReducer, { userSliceState } from './user';
 
 const initialUsers: userSliceState[] = [
@@ -25,6 +26,21 @@ describe('userReducer', () => {
     const newState = userReducer(state, action);
     expect(newState).toEqual(initialUsers[0]);
   });
+
+  test('return null with action user/clear', () => {
+    const state = initialUsers[1];
+
+    const action = {
+      type: 'user/clear',
+      payload: initialUsers[0]
+    };
+
+    deepFreeze(state);
+    const newState = userReducer(state, action);
+
+    expect(newState).toBeNull();
+  });
+
 });
 
 
