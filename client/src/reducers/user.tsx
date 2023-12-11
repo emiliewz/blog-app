@@ -14,10 +14,13 @@ const userSlice = createSlice({
   reducers: {
     set(_state, { payload }: PayloadAction<userSliceState>) {
       return payload;
+    },
+    clear(_state, _action) {
+      return initialState;
     }
   }
 });
 
-export const { set } = userSlice.actions;
+export const { set, clear } = userSlice.actions;
 
 export default userSlice.reducer;
