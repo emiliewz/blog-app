@@ -57,7 +57,7 @@ const isString = (text: unknown): text is string => {
 
 const parseString = (text: unknown): string => {
   if (!isString(text)) {
-    throw DataEntryError(`Incorrect or missing ${text}`);
+    throw DataEntryError(`${text} is not a string`);
   }
   return text;
 };
@@ -68,7 +68,7 @@ const isNumber = (num: unknown): num is number => {
 
 const parseNumber = (num: unknown): number => {
   if (!isNumber(num)) {
-    throw DataEntryError(`Incorrect or missing ${num}`);
+    throw DataEntryError(`${num} is not a number`);
   }
   return num;
 };
