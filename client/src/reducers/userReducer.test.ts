@@ -4,13 +4,13 @@ import { UserSliceState } from '../app/types';
 
 const initialUsers: UserSliceState[] = [
   {
-    username: 'Alice',
-    name: 'alice',
+    name: 'Alice',
+    username: 'alice',
     token: 'this is a fake token'
   },
   {
-    username: 'Bob',
-    name: 'bob',
+    name: 'Bob',
+    username: 'bob',
     token: 'this is a fake token'
   },
 ];

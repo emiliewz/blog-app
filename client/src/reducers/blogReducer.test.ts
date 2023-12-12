@@ -10,8 +10,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html',
     likes: 12,
     user: {
-      username: 'Alice',
-      name: 'alice',
+      name: 'Alice',
+      username: 'alice',
       id: '0',
       blogs: []
     },
@@ -24,8 +24,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10,
     user: {
-      username: 'Alice',
-      name: 'alice',
+      name: 'Alice',
+      username: 'alice',
       id: '0',
       blogs: []
     },
@@ -38,8 +38,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
     likes: 5,
     user: {
-      username: 'Bob',
-      name: 'bob',
+      name: 'Bob',
+      username: 'bob',
       id: '1',
       blogs: []
     },
@@ -52,8 +52,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'https://reactpatterns.com/',
     likes: 7,
     user: {
-      username: 'Bob',
-      name: 'bob',
+      name: 'Bob',
+      username: 'bob',
       id: '1',
       blogs: []
     },
@@ -66,8 +66,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html',
     likes: 0,
     user: {
-      username: 'Charles',
-      name: 'charles',
+      name: 'Charles',
+      username: 'charles',
       id: '2',
       blogs: []
     },
@@ -80,8 +80,8 @@ const initialBlogs: BlogsSliceState[] = [
     url: 'http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html',
     likes: 2,
     user: {
-      username: 'Charles',
-      name: 'charles',
+      name: 'Charles',
+      username: 'charles',
       id: '2',
       blogs: []
     },

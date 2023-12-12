@@ -4,20 +4,20 @@ import deepFreeze from 'deep-freeze';
 
 const initialUsers: UsersSliceState[] = [
   {
-    username: 'Alice',
-    name: 'alice',
+    name: 'Alice',
+    username: 'alice',
     id: '0',
     blogs: []
   },
   {
-    username: 'Bob',
-    name: 'bob',
+    name: 'Bob',
+    username: 'bob',
     id: '1',
     blogs: []
   },
   {
-    username: 'Charles',
-    name: 'charles',
+    name: 'Charles',
+    username: 'charles',
     id: '2',
     blogs: []
   }

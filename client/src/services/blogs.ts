@@ -5,7 +5,7 @@ import { BaseBlog, BlogsSliceState } from '../app/types';
 const baseUrl = '/api/blogs';
 
 const headers = {
-  'Authorization': `Bearer ${storageService.getUser().token}`
+  'Authorization': `Bearer ${storageService.getUser()?.token}`
 };
 
 const getAll = async () => {
