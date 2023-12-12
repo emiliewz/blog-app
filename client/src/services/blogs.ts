@@ -23,11 +23,16 @@ const update = async (object: BlogsSliceState) => {
   return result.data;
 };
 
+const comment = async (comment: string, id: string) => {
+  const result = await axios.post(`${baseUrl}/${id}/comments`, { comment });
+  return result.data;
+};
+
 const remove = async (id: string) => {
   const result = await axios.delete(`${baseUrl}/${id}`);
   return result.data;
 };
 
 export default {
-  getAll, create, update, remove
+  getAll, create, update, comment, remove
 };
