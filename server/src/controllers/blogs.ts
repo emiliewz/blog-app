@@ -39,7 +39,7 @@ router.post('/', asyncHandler(async (req: CustomReq, res) => {
 }) as RequestHandler);
 
 router.put('/:id', asyncHandler(async (req: CustomReq, res) => {
-  const { title, author, url } = helper.toNewBlog(req.body);
+  const { title, author, url, likes } = helper.toNewBlog(req.body);
   const user = req.user;
   const blog = await Blog.findById(req.params.id);
 
@@ -51,7 +51,7 @@ router.put('/:id', asyncHandler(async (req: CustomReq, res) => {
 
   const updatedBlog = await Blog
     .findByIdAndUpdate(req.params.id, {
-      title, author, url
+      title, author, url, likes
     }, { new: true, runValidators: true, context: 'query' })
     .populate<{ user: IUser }>('user', { username: 1, name: 1 });
 
