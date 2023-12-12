@@ -1,39 +1,61 @@
-import usersReducer, { usersSliceState, initialState } from './users';
+import { UsersSliceState } from '../app/types';
+import usersReducer from './users';
 import deepFreeze from 'deep-freeze';
+
+const initialUsers: UsersSliceState[] = [
+  {
+    username: 'Alice',
+    name: 'alice',
+    id: '0',
+    blogs: []
+  },
+  {
+    username: 'Bob',
+    name: 'bob',
+    id: '1',
+    blogs: []
+  },
+  {
+    username: 'Charles',
+    name: 'charles',
+    id: '2',
+    blogs: []
+  }
+];
 
 describe('usersReducer', () => {
   test('return all initial users with action users/set', () => {
-    const state: usersSliceState[] = [];
+    const state: UsersSliceState[] = [];
     const action = {
       type: 'users/set',
-      payload: initialState
+      payload: initialUsers
     };
 
     deepFreeze(state);
     const newState = usersReducer(state, action);
 
-    expect(newState).toHaveLength(initialState.length);
-    expect(newState).toEqual(initialState);
+    expect(newState).toHaveLength(initialUsers.length);
+    expect(newState).toEqual(initialUsers);
   });
 
   test('return new state with action users/create', () => {
-    const state: usersSliceState[] = [];
+    const state: UsersSliceState[] = [];
     const action = {
       type: 'users/create',
-      payload: initialState[0],
+      payload: initialUsers[0],
     };
 
     deepFreeze(state);
     const newState = usersReducer(state, action);
 
     expect(newState).toHaveLength(1);
-    expect(newState).toContainEqual(initialState[0]);
+    expect(newState).toContainEqual(initialUsers[0]);
   });
 
   test('return updated state with action users/update', () => {
-    const state: usersSliceState[] = initialState.slice(0, 2);
+    const state: UsersSliceState[] = initialUsers.slice(0, 2);
 
-    const userToUpdate = { ...initialState[1], name: 'Linda' };
+    const userToUpdate = { ...initialUsers[1], name: 'Linda' };
 
     const action = {
       type: 'users/update',
@@ -45,11 +67,11 @@ describe('usersReducer', () => {
 
     expect(newState).toHaveLength(2);
     expect(newState).toContainEqual(userToUpdate);
-    expect(newState).not.toContainEqual(initialState[1]);
+    expect(newState).not.toContainEqual(initialUsers[1]);
   });
 
   test('delete user with action users/remove', () => {
-    const state: usersSliceState[] = initialState;
+    const state: UsersSliceState[] = initialUsers;
     const action = {
       type: 'users/remove',
       payload: '2'
@@ -58,8 +80,8 @@ describe('usersReducer', () => {
     deepFreeze(state);
     const newState = usersReducer(state, action);
 
-    expect(newState).toHaveLength(initialState.length - 1);
-    expect(newState).not.toContainEqual(initialState[2]);
+    expect(newState).toHaveLength(initialUsers.length - 1);
+    expect(newState).not.toContainEqual(initialUsers[2]);
   });
 
 });

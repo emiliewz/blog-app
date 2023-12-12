@@ -1,7 +1,8 @@
 import deepFreeze from 'deep-freeze';
-import userReducer, { userSliceState } from './user';
+import userReducer from './user';
+import { UserSliceState } from '../app/types';
 
-const initialUsers: userSliceState[] = [
+const initialUsers: UserSliceState[] = [
   {
     username: 'Alice',
     name: 'alice',

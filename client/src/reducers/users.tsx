@@ -1,46 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { blogSliceState } from './blogs';
+import { UsersSliceState } from '../app/types';
 
-export interface usersSliceState {
-  username: string,
-  password?: string,
-  name: string
-  id: string
-  blogs: blogSliceState[]
-}
-
-export const initialState: usersSliceState[] = [
-  {
-    username: 'Alice',
-    name: 'alice',
-    id: '0',
-    blogs: []
-  },
-  {
-    username: 'Bob',
-    name: 'bob',
-    id: '1',
-    blogs: []
-  },
-  {
-    username: 'Charles',
-    name: 'charles',
-    id: '2',
-    blogs: []
-  }
-];
+const initialState: UsersSliceState[] = [];
 
 const usersSlice = createSlice({
   name: 'users',
-  initialState,
+  initialState: initialState,
   reducers: {
-    set(_state, { payload }: PayloadAction<usersSliceState[]>) {
+    set(_state, { payload }: PayloadAction<UsersSliceState[]>) {
       return payload;
     },
-    create(state, { payload }: PayloadAction<usersSliceState>) {
+    create(state, { payload }: PayloadAction<UsersSliceState>) {
       return state.concat(payload);
     },
-    update(state, { payload }: PayloadAction<usersSliceState>) {
+    update(state, { payload }: PayloadAction<UsersSliceState>) {
       const blog = payload;
       return state.map(u => u.id !== blog.id ? u : blog);
     },
