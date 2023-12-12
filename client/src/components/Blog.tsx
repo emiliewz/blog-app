@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useParams } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { remove } from '../reducers/blogs';
+import { remove, update } from '../reducers/blogs';
 
 const Blog = () => {
   const { id } = useParams<{ id?: string }>();
@@ -16,6 +16,11 @@ const Blog = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
       dispatch(remove(blog.id));
     }
+  };
+
+  const likeOne = () => {
+    const blogToUpdate = { ...blog, likes: blog.likes + 1 };
+    dispatch(update(blogToUpdate));
   };
 
   const canRemove = user?.username === blog.user.username;
@@ -35,7 +40,7 @@ const Blog = () => {
           </Card.Text>
 
           <Card.Text>
-            {blog.likes} likes
+            {blog.likes} likes {user && <button onClick={likeOne} className='like'>like</button>}
           </Card.Text>
 
           <Card.Text>
