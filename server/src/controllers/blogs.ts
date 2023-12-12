@@ -18,7 +18,7 @@ router.get('/', asyncHandler(async (_req, res) => {
 }) as RequestHandler);
 
 router.post('/', asyncHandler(async (req: CustomReq, res) => {
-  const { title, author, url } = helper.toNewBlog(req.body);
+  const { title, author, url, likes } = helper.toNewBlog(req.body);
   const user = req.user;
 
   if (!user) {
@@ -26,7 +26,7 @@ router.post('/', asyncHandler(async (req: CustomReq, res) => {
   }
 
   const blog = new Blog({
-    title, author, url,
+    title, author, url, likes,
     user: user._id
   });
 
