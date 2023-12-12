@@ -1,11 +1,11 @@
 import axios from 'axios';
 import storageService from './storage';
-import { BaseBlog } from '../app/types';
+import { BaseBlog, BlogsSliceState } from '../app/types';
 
 const baseUrl = '/api/blogs';
 
 const headers = {
-  'Authorization': `Bearer ${storageService.getUser()?.token}`
+  'Authorization': `Bearer ${storageService.getUser().token}`
 };
 
 const getAll = async () => {
@@ -18,6 +18,16 @@ const create = async (object: BaseBlog) => {
   return result.data;
 };
 
+const update = async (object: BlogsSliceState) => {
+  const result = await axios.put(`${baseUrl}/${object.id}`, object, { headers });
+  return result.data;
+};
+
+const remove = async (id: string) => {
+  const result = await axios.delete(`${baseUrl}/${id}`);
+  return result.data;
+};
+
 export default {
-  getAll, create
+  getAll, create, update, remove
 };
