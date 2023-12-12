@@ -1,12 +1,24 @@
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useParams } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
+import { remove } from '../reducers/blogs';
 
 const Blog = () => {
   const { id } = useParams<{ id?: string }>();
   const blog = useAppSelector(({ blogs }) => blogs.find(b => b.id === id));
+  const user = useAppSelector(({ user }) => user);
+
+  const dispatch = useAppDispatch();
 
   if (!blog) return null;
+
+  const removeOne = () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      dispatch(remove(blog.id));
+    }
+  };
+
+  const canRemove = user?.username === blog.user.username;
 
   return (
     <div>
@@ -29,6 +41,10 @@ const Blog = () => {
           <Card.Text>
             added by {blog.user.name}
           </Card.Text>
+
+          {canRemove &&
+            <button onClick={removeOne}>delete</button>
+          }
 
           <h3 className='mt-5'>comments</h3>
         </Card.Body>
