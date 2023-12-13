@@ -35,3 +35,8 @@ export interface LoginEntry {
   username: string,
   password: string
 }
+
+export interface InfoSliceState {
+  type: string | null,
+  message: string | null
+}
