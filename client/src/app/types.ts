@@ -1,4 +1,4 @@
-export interface BlogsSliceState extends BaseBlog{
+export interface BlogsSliceState extends BaseBlog {
   likes: number,
   comments: string[],
   user: UsersSliceState,
@@ -12,16 +12,26 @@ export interface BaseBlog {
   likes?: number,
 }
 
-export interface UsersSliceState {
+interface BaseUser {
+  name: string,
   username: string,
+}
+
+export interface UsersSliceState extends BaseUser {
   password?: string,
-  name: string
   id: string
   blogs: BlogsSliceState[]
 }
 
-export interface UserSliceState {
-  name: string,
-  username: string,
+export interface UserEntry extends BaseUser {
+  password: string,
+}
+
+export interface UserSliceState extends BaseUser {
   token: string,
+}
+
+export interface LoginEntry {
+  username: string,
+  password: string
 }
