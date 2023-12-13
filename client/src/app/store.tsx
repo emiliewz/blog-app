@@ -3,12 +3,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../reducers/user';
 import blogsReducer from '../reducers/blogs';
 import usersReducer from '../reducers/users';
+import infoReducer from '../reducers/info';
 
 const store = configureStore({
   reducer: {
     blogs: blogsReducer,
     users: usersReducer,
-    user: userReducer
+    user: userReducer,
+    info: infoReducer
   }
 });
 
