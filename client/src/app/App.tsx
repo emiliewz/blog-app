@@ -14,6 +14,7 @@ import Users from '../components/Users';
 import blogsService from '../services/blogs';
 import usersService from '../services/users';
 import storageService from '../services/storage';
+import RegisterForm from '../components/RegisterForm';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -23,24 +24,29 @@ const App = () => {
       .then(data => {
         dispatch(set(data));
       });
+
     usersService.getAll()
       .then(data => dispatch(setUsers(data)));
+
     const user = storageService.getUser();
     dispatch(setUser(user));
   }, []);
 
   return (
     <div>
-      <h1>hello</h1>
+      <h1> Blog App </h1>
       <Link to='/'>blogs</Link>
       <Link to='/users'>Users</Link>
       <Link to='/login'>Login</Link>
+      <Link to='/register'>Register</Link>
+
       <Routes>
         <Route path='/' element={<Blogs />} />
         <Route path='/blogs/:id' element={<Blog />} />
         <Route path='/users/:id' element={<User />} />
         <Route path='/users' element={<Users />} />
         <Route path='/login' element={<LoginForm />} />
+        <Route path='/register' element={<RegisterForm />} />
       </Routes>
     </div>
   );
