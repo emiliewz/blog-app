@@ -45,7 +45,7 @@ router.put('/:id', asyncHandler(async (req: CustomReq, res) => {
 
   if (!blog) {
     return res.status(400).json({ error: 'blog not find' });
-  } else if (!user || blog.user.toString() !== user._id.toString()) {
+  } else if (!user) {
     return res.status(401).json({ error: 'operation not permitted' });
   }
 
