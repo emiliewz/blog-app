@@ -2,6 +2,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useParams } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import { remove, update } from '../reducers/blogs';
+import blogsService from '../services/blogs';
 
 const Blog = () => {
   const { id } = useParams<{ id?: string }>();
@@ -18,9 +19,10 @@ const Blog = () => {
     }
   };
 
-  const likeOne = () => {
+  const likeOne = async () => {
     const blogToUpdate = { ...blog, likes: blog.likes + 1 };
-    dispatch(update(blogToUpdate));
+    const newBlog = await blogsService.update(blogToUpdate);
+    dispatch(update(newBlog));
   };
 
   const canRemove = user?.username === blog.user.username;
