@@ -1,9 +1,7 @@
 import { FormEvent, FormEventHandler } from 'react';
 import { useAppDispatch, useField } from '../app/hooks';
 import { Button, Form } from 'react-bootstrap';
-import { set } from '../reducers/user';
-import storageService from '../services/storage';
-import usersService from '../services/users';
+import { createUser } from '../reducers/users';
 
 const RegisterForm = () => {
   const name = useField('text');
@@ -13,17 +11,12 @@ const RegisterForm = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const user = await usersService.create({
-        name: name.value,
-        username: username.value,
-        password: password.value
-      });
-      storageService.saveUser(user);
-      dispatch(set(user));
-    } catch (exception) {
-      console.log('something wrong happened');
-    }
+    const user = {
+      name: name.value,
+      username: username.value,
+      password: password.value
+    };
+    dispatch(createUser(user));
   };
 
   return (
