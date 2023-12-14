@@ -15,6 +15,7 @@ import usersService from '../services/users';
 import storageService from '../services/storage';
 import Notification from '../components/Notification';
 import RegisterForm from '../components/RegisterForm';
+import NewBlog from '../components/NewBlog';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -34,6 +35,7 @@ const App = () => {
       <h1> Blog App </h1>
       <Link to='/'>blogs</Link>
       <Link to='/users'>Users</Link>
+      <Link to='/create'>Create</Link>
       <Link to='/login'>Login</Link>
       <Link to='/register'>Register</Link>
 
@@ -44,6 +46,7 @@ const App = () => {
         <Route path='/blogs/:id' element={<Blog />} />
         <Route path='/users/:id' element={<User />} />
         <Route path='/users' element={<Users />} />
+        <Route path='/create' element={<NewBlog />} />
         <Route path='/login' element={<LoginForm />} />
         <Route path='/register' element={<RegisterForm />} />
       </Routes>
