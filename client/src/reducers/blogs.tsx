@@ -25,7 +25,7 @@ const blogsSlice = createSlice({
   }
 });
 
-export const { set, add, update, remove } = blogsSlice.actions;
+const { set, add, update, remove } = blogsSlice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async dispatch => {
@@ -52,6 +52,13 @@ export const removeBlog = (id: string): AppThunk => {
   return async dispatch => {
     await blogsService.remove(id);
     dispatch(remove(id));
+  };
+};
+
+export const commentBlog = (comment: string, { id }: BlogsSliceState): AppThunk => {
+  return async dispatch => {
+    const commentedBlog = await blogsService.comment(comment, id);
+    dispatch(update(commentedBlog));
   };
 };
 
