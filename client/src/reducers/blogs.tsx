@@ -29,17 +29,22 @@ export const { set, add, update, remove } = blogsSlice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async dispatch => {
-    const blogs = await blogsService.getAll();
-    console.log(blogs);
-
+    const blogs: BlogsSliceState[] = await blogsService.getAll();
     dispatch(set(blogs));
   };
 };
 
 export const createBlog = (object: BaseBlog): AppThunk => {
   return async dispatch => {
-    const blog = await blogsService.create(object);
+    const blog: BlogsSliceState = await blogsService.create(object);
     dispatch(add(blog));
+  };
+};
+
+export const updateBlog = (object: BlogsSliceState): AppThunk => {
+  return async disptach => {
+    const blog: BlogsSliceState = await blogsService.update(object);
+    disptach(update(blog));
   };
 };
 
