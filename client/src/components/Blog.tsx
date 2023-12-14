@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useParams } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
-import { remove, updateBlog } from '../reducers/blogs';
+import { removeBlog, updateBlog } from '../reducers/blogs';
 
 const Blog = () => {
   const { id } = useParams<{ id?: string }>();
@@ -14,7 +14,7 @@ const Blog = () => {
 
   const removeOne = () => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(remove(blog.id));
+      dispatch(removeBlog(blog.id));
     }
   };
 
