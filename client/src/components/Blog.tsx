@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useParams } from 'react-router-dom';
-import { Card } from 'react-bootstrap';
+import { Button, Card, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { removeBlog, updateBlog } from '../reducers/blogs';
 
 const Blog = () => {
@@ -51,6 +51,22 @@ const Blog = () => {
           }
 
           <h3 className='mt-5'>comments</h3>
+
+          {user && <Form>
+            <Form.Group>
+              <Form.Control
+                type='text'
+                name='comment'
+              />
+              <Button className='mt-2' variant='secondary' type='submit'>add comment</Button>
+            </Form.Group>
+          </Form>}
+
+          <ListGroup className='mt-3'>
+            {blog.comments.map((c, i) =>
+              <ListGroupItem variant='dark' key={i}>{c}</ListGroupItem>)
+            }
+          </ListGroup>
         </Card.Body>
       </Card>
     </div >
