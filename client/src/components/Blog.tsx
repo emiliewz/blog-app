@@ -62,8 +62,7 @@ const Blog = () => {
           {user && <Form onSubmit={handleComment}>
             <Form.Group>
               <Form.Control
-                type='text'
-                name='comment'
+                {...comment}
               />
               <Button className='mt-2' variant='secondary' type='submit'>add comment</Button>
             </Form.Group>

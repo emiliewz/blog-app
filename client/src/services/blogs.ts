@@ -24,12 +24,12 @@ const update = async (object: BlogsSliceState) => {
 };
 
 const comment = async (comment: string, id: string) => {
-  const result = await axios.post(`${baseUrl}/${id}/comments`, { comment });
+  const result = await axios.post(`${baseUrl}/${id}/comments`, { comment }, { headers });
   return result.data;
 };
 
 const remove = async (id: string) => {
-  const result = await axios.delete(`${baseUrl}/${id}`);
+  const result = await axios.delete(`${baseUrl}/${id}`, { headers });
   return result.data;
 };
 
