@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UsersSliceState } from '../app/types';
+import usersService from '../services/users';
+import { AppThunk } from '../app/store';
 
 const initialState: UsersSliceState[] = [];
 
@@ -25,6 +27,13 @@ const usersSlice = createSlice({
 });
 
 export const { set, create, update, remove } = usersSlice.actions;
+
+export const initializeUsers = (): AppThunk => {
+  return async dispatch => {
+    const users: UsersSliceState[] = await usersService.getAll();
+    dispatch(set(users));
+  };
+};
 
 export default usersSlice.reducer;
 

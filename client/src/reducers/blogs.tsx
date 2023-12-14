@@ -57,7 +57,7 @@ export const removeBlog = (id: string): AppThunk => {
 
 export const commentBlog = (comment: string, { id }: BlogsSliceState): AppThunk => {
   return async dispatch => {
-    const commentedBlog = await blogsService.comment(comment, id);
+    const commentedBlog: BlogsSliceState = await blogsService.comment(comment, id);
     dispatch(update(commentedBlog));
   };
 };
