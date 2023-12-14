@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UsersSliceState } from '../app/types';
+import { UserEntry, UsersSliceState } from '../app/types';
 import usersService from '../services/users';
+import storageService from '../services/storage';
 import { AppThunk } from '../app/store';
 
 const initialState: UsersSliceState[] = [];
@@ -12,7 +13,7 @@ const usersSlice = createSlice({
     set(_state, { payload }: PayloadAction<UsersSliceState[]>) {
       return payload;
     },
-    create(state, { payload }: PayloadAction<UsersSliceState>) {
+    add(state, { payload }: PayloadAction<UsersSliceState>) {
       return state.concat(payload);
     },
     update(state, { payload }: PayloadAction<UsersSliceState>) {
@@ -26,12 +27,19 @@ const usersSlice = createSlice({
   }
 });
 
-export const { set, create, update, remove } = usersSlice.actions;
+const { set, add } = usersSlice.actions;
 
 export const initializeUsers = (): AppThunk => {
   return async dispatch => {
     const users: UsersSliceState[] = await usersService.getAll();
     dispatch(set(users));
+  };
+};
+
+export const createUser = (object: UserEntry): AppThunk => {
+  return async dispatch => {
+    const user: UsersSliceState = await usersService.create(object);
+    dispatch(add(user));
   };
 };
 
