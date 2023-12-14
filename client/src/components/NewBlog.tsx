@@ -1,8 +1,7 @@
 import { Button, Form } from 'react-bootstrap';
 import { useAppDispatch, useField } from '../app/hooks';
 import { FormEvent, FormEventHandler } from 'react';
-import { create } from '../reducers/blogs';
-import blogsService from '../services/blogs';
+import { createBlog } from '../reducers/blogs';
 
 const NewBlog = () => {
   const dispatch = useAppDispatch();
@@ -11,16 +10,13 @@ const NewBlog = () => {
   const url = useField('text');
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
-    console.log('submit func');
-
     event.preventDefault();
     try {
-      const blog = await blogsService.create({
+      dispatch(createBlog({
         title: title.value,
         author: author.value,
         url: url.value
-      });
-      dispatch(create(blog));
+      }));
     } catch (exception) {
       console.log('something went wrong');
     }
