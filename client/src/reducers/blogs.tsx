@@ -48,4 +48,11 @@ export const updateBlog = (object: BlogsSliceState): AppThunk => {
   };
 };
 
+export const removeBlog = (id: string): AppThunk => {
+  return async dispatch => {
+    await blogsService.remove(id);
+    dispatch(remove(id));
+  };
+};
+
 export default blogsSlice.reducer;
