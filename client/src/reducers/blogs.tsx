@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { BlogsSliceState } from '../app/types';
+import { BaseBlog, BlogsSliceState } from '../app/types';
 import blogsService from '../services/blogs';
 import { AppThunk } from '../app/store';
 
@@ -12,7 +12,7 @@ const blogsSlice = createSlice({
     set(_state, { payload }: PayloadAction<BlogsSliceState[]>) {
       return payload;
     },
-    create(state, { payload }: PayloadAction<BlogsSliceState>) {
+    add(state, { payload }: PayloadAction<BlogsSliceState>) {
       return state.concat(payload);
     },
     update(state, { payload }: PayloadAction<BlogsSliceState>) {
@@ -25,7 +25,7 @@ const blogsSlice = createSlice({
   }
 });
 
-export const { set, create, update, remove } = blogsSlice.actions;
+export const { set, add, update, remove } = blogsSlice.actions;
 
 export const initializeBlogs = (): AppThunk => {
   return async dispatch => {
@@ -33,6 +33,13 @@ export const initializeBlogs = (): AppThunk => {
     console.log(blogs);
 
     dispatch(set(blogs));
+  };
+};
+
+export const createBlog = (object: BaseBlog): AppThunk => {
+  return async dispatch => {
+    const blog = await blogsService.create(object);
+    dispatch(add(blog));
   };
 };
 
