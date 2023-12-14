@@ -1,12 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector, useField } from '../app/hooks';
 import { useParams } from 'react-router-dom';
 import { Button, Card, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { removeBlog, updateBlog } from '../reducers/blogs';
+import { commentBlog, removeBlog, updateBlog } from '../reducers/blogs';
+import { FormEvent, FormEventHandler } from 'react';
 
 const Blog = () => {
   const { id } = useParams<{ id?: string }>();
   const blog = useAppSelector(({ blogs }) => blogs.find(b => b.id === id));
   const user = useAppSelector(({ user }) => user);
+  const comment = useField('text');
 
   const dispatch = useAppDispatch();
 
@@ -23,6 +25,11 @@ const Blog = () => {
   };
 
   const canRemove = user?.username === blog.user.username;
+
+  const handleComment: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(commentBlog(comment.value, blog));
+  };
 
   return (
     <div>
@@ -52,7 +59,7 @@ const Blog = () => {
 
           <h3 className='mt-5'>comments</h3>
 
-          {user && <Form>
+          {user && <Form onSubmit={handleComment}>
             <Form.Group>
               <Form.Control
                 type='text'
