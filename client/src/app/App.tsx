@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './hooks';
-import { initializeBlogs } from '../reducers/blogs';
+import { useAppSelector, useInitialization } from './hooks';
 import { Link, Route, Routes } from 'react-router-dom';
-import { initializeUsers } from '../reducers/users';
-import { initializeUser, logOut } from '../reducers/user';
 
 import LoginForm from '../components/LoginForm';
 import Blogs from '../components/Blogs';
@@ -14,17 +11,13 @@ import Users from '../components/Users';
 import Notification from '../components/Notification';
 import RegisterForm from '../components/RegisterForm';
 import NewBlog from '../components/NewBlog';
-import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 
 const App = () => {
-  const dispatch = useAppDispatch();
+  const initializer = useInitialization();
   const user = useAppSelector(({ user }) => user);
 
-  useEffect(() => {
-    dispatch(initializeBlogs());
-    dispatch(initializeUsers());
-    dispatch(initializeUser());
-  }, []);
+  useEffect(() => initializer(), []);
 
   return (
     <div className='container'>
@@ -34,8 +27,8 @@ const App = () => {
           <Navbar.Collapse>
             <Nav className='me-auto'>
               <Nav.Link as={Link} to='/'>Blogs</Nav.Link>
-              <Nav.Link as={Link} to='/create'>Create</Nav.Link>
-              <Nav.Link as={Link} to='/users'>Users</Nav.Link>
+              {user && <><Nav.Link as={Link} to='/create'>Add</Nav.Link>
+                <Nav.Link as={Link} to='/users'>Users</Nav.Link></>}
               {!user && (<><Nav.Link as={Link} to='/login'>Login</Nav.Link>
                 <Nav.Link as={Link} to='/register'>Register</Nav.Link></>)}
             </Nav>
@@ -46,7 +39,6 @@ const App = () => {
               <Navbar.Text>
                 Signed in as: {user?.name}
               </Navbar.Text>
-              <Button className='ms-2' variant='outline-success' onClick={() => dispatch(logOut())}>LogOut</Button>
             </Navbar.Collapse>
             <Navbar.Toggle />
           </>)}
