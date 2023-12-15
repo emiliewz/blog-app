@@ -1,16 +1,23 @@
 import { UserSliceState } from '../app/types';
+import blogsService from '../services/blogs';
 
-const KEY = 'blogApp';
+const KEY: string = 'blogApp';
 
-const saveUser = (u: UserSliceState) => localStorage.setItem(KEY, JSON.stringify(u));
+const saveUser = (u: UserSliceState): void => {
+  blogsService.setHearders(u.token);
+  localStorage.setItem(KEY, JSON.stringify(u));
+};
 
-const getUser = () => {
+const getUser = (): UserSliceState | null => {
   const user = window.localStorage.getItem(KEY);
-  if (user) return JSON.parse(user);
+  if (user) {
+    blogsService.setHearders(JSON.parse(user).token);
+    return JSON.parse(user);
+  }
   return null;
 };
 
-const clearUser = () => localStorage.removeItem(KEY);
+const clearUser = (): void => localStorage.removeItem(KEY);
 
 
 export default {
