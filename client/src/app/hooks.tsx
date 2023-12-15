@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { initializeUsers } from '../reducers/users';
 import { initializeUser } from '../reducers/user';
 import { initializeBlogs } from '../reducers/blogs';
+import { notify } from '../reducers/info';
 
 type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
@@ -36,5 +37,12 @@ export const useInitialization = () => {
     dispatch(initializeBlogs());
     dispatch(initializeUsers());
     dispatch(initializeUser());
+  };
+};
+
+export const useNotification = () => {
+  const dispatch = useAppDispatch();
+  return (message: string, type = 'info') => {
+    dispatch(notify(message, type));
   };
 };
