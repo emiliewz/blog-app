@@ -32,6 +32,10 @@ app.get('/version', (_req, res) => {
   res.send('1');
 });
 
+app.get('/health', (_req, res) => {
+  res.send('ok');
+});
+
 app.use(express.static(__dirname + '/../dist'));
 
 app.get('/*', function (_req, res) {
