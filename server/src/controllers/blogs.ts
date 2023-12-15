@@ -91,7 +91,8 @@ router.post('/:id/comments', asyncHandler(async (req: CustomReq, res) => {
   blog.comments = blog.comments.concat(comment);
   await blog.save();
 
-  return res.json(blog);
+  const commentedBlog = await Blog.findById(blog.id).populate<{ user: IUser }>('user', { username: 1, name: 1 });
+  return res.json(commentedBlog);
 }) as RequestHandler);
 
 export default router;
