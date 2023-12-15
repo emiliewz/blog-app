@@ -2,7 +2,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import type { RootState, AppDispatch } from './store';
 import { useState } from 'react';
 import { initializeUsers } from '../reducers/users';
-import { initializeUser } from '../reducers/user';
+import { initializeUser, logOut } from '../reducers/user';
 import { initializeBlogs } from '../reducers/blogs';
 import { notify } from '../reducers/info';
 
@@ -44,5 +44,12 @@ export const useNotification = () => {
   const dispatch = useAppDispatch();
   return (message: string, type = 'info') => {
     dispatch(notify(message, type));
+  };
+};
+
+export const useLogOut = () => {
+  const dispatch = useAppDispatch();
+  return () => {
+    dispatch(logOut());
   };
 };
