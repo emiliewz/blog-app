@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { UserSliceState } from '../app/types';
+import { LoginEntry, UserSliceState } from '../app/types';
 import { AppThunk } from '../app/store';
 import storageService from '../services/storage';
+import loginService from '../services/login';
 
 const initialState: UserSliceState | null = null;
 
@@ -24,6 +25,14 @@ export const initializeUser = (): AppThunk => {
   return async dispatch => {
     const user: UserSliceState | null = storageService.getUser();
     if (user) dispatch(set(user));
+  };
+};
+
+export const loginWith = (credentials: LoginEntry): AppThunk => {
+  return async dispatch => {
+    const user: UserSliceState = await loginService.login(credentials);
+    storageService.saveUser(user);
+    dispatch(set(user));
   };
 };
 
