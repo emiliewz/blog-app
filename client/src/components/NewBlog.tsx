@@ -1,5 +1,5 @@
 import { Button, Form } from 'react-bootstrap';
-import { useAppDispatch, useField } from '../app/hooks';
+import { useAppDispatch, useField, useNotification } from '../app/hooks';
 import { FormEvent, FormEventHandler } from 'react';
 import { createBlog } from '../reducers/blogs';
 
@@ -8,23 +8,22 @@ const NewBlog = () => {
   const title = useField('text');
   const author = useField('text');
   const url = useField('text');
+  const notifyWith = useNotification();
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      dispatch(createBlog({
-        title: title.value,
-        author: author.value,
-        url: url.value
-      }));
-    } catch (exception) {
-      console.log('something went wrong');
-    }
+    const blog = {
+      title: title.value,
+      author: author.value,
+      url: url.value
+    };
+    dispatch(createBlog(blog)).unwrap().catch(error => notifyWith(error.message)
+    );
   };
 
   return (
     <>
-      <h4>Create a new blog</h4>
+      <h2>Create a new blog</h2>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group>
