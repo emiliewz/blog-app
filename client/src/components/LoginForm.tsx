@@ -1,13 +1,16 @@
 import { FormEvent, FormEventHandler } from 'react';
-import { useAppDispatch, useField } from '../app/hooks';
+import { handleError, useAppDispatch, useField, useNotification } from '../app/hooks';
 import { Button, Form } from 'react-bootstrap';
 import { loginWith } from '../reducers/user';
 import { LoginEntry } from '../app/types';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const username = useField('text');
   const password = useField('password');
   const dispatch = useAppDispatch();
+  const notifyWith = useNotification();
+  const navigate = useNavigate();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +18,12 @@ const LoginForm = () => {
       username: username.value,
       password: password.value
     };
-    dispatch(loginWith(credentials));
+    try {
+      await dispatch(loginWith(credentials));
+      navigate('/');
+    } catch (error: unknown) {
+      notifyWith(handleError(error));
+    }
   };
 
   return (
