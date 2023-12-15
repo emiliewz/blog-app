@@ -38,10 +38,10 @@ describe('usersReducer', () => {
     expect(newState).toEqual(initialUsers);
   });
 
-  test('return new state with action users/create', () => {
+  test('return new state with action users/add', () => {
     const state: UsersSliceState[] = [];
     const action = {
-      type: 'users/create',
+      type: 'users/add',
       payload: initialUsers[0],
     };
 

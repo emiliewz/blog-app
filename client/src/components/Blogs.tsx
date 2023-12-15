@@ -4,7 +4,7 @@ import { Table } from 'react-bootstrap';
 import { BlogsSliceState } from '../app/types';
 
 const Blogs = () => {
-  const blogs = useAppSelector(({ blogs }) => blogs);
+  const blogs: BlogsSliceState[] = useAppSelector(({ blogs }) => blogs);
 
   const byLikes = (a: BlogsSliceState, b: BlogsSliceState): number => b.likes - a.likes;
 

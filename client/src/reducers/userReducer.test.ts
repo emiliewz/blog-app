@@ -17,19 +17,19 @@ const initialUsers: UserSliceState[] = [
 
 describe('userReducer', () => {
   test('return a new user with action user/set', () => {
-    const state = null;
+    const state: UserSliceState | null = null;
 
     const action = {
       type: 'user/set',
       payload: initialUsers[0]
     };
 
-    const newState = userReducer(state, action);
+    const newState: UserSliceState | null = userReducer(state, action);
     expect(newState).toEqual(initialUsers[0]);
   });
 
   test('return null with action user/clear', () => {
-    const state = initialUsers[1];
+    const state: UserSliceState | null = initialUsers[1];
 
     const action = {
       type: 'user/clear',
@@ -37,7 +37,7 @@ describe('userReducer', () => {
     };
 
     deepFreeze(state);
-    const newState = userReducer(state, action);
+    const newState: UserSliceState | null = userReducer(state, action);
 
     expect(newState).toBeNull();
   });

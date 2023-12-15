@@ -24,7 +24,7 @@ const Blog = () => {
     dispatch(updateBlog({ ...blog, likes: blog.likes + 1 }));
   };
 
-  const canRemove = user?.username === blog.user.username;
+  const canRemove: boolean = user?.username === blog.user.username;
 
   const handleComment: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

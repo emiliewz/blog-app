@@ -1,8 +1,9 @@
 import { Alert } from 'react-bootstrap';
 import { useAppSelector } from '../app/hooks';
+import { InfoSliceState } from '../app/types';
 
 const Notification = () => {
-  const info = useAppSelector(({ info }) => info);
+  const info: InfoSliceState = useAppSelector(({ info }) => info);
 
   if (!info.message) {
     return null;

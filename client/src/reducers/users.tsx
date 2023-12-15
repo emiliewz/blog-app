@@ -1,7 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UserEntry, UsersSliceState } from '../app/types';
 import usersService from '../services/users';
-import storageService from '../services/storage';
 import { AppThunk } from '../app/store';
 
 const initialState: UsersSliceState[] = [];

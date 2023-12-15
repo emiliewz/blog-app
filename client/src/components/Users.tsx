@@ -1,9 +1,10 @@
 import { useAppSelector } from '../app/hooks';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import { UsersSliceState } from '../app/types';
 
 const Users = () => {
-  const users = useAppSelector(({ users }) => users);
+  const users: UsersSliceState[] = useAppSelector(({ users }) => users);
 
   if (!users) return null;
 

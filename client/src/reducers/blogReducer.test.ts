@@ -93,26 +93,26 @@ describe('blogReducer', () => {
   test('return all initial blogs with action blogs/set', () => {
     const state: BlogsSliceState[] = [];
     const action = {
-      type: 'blogs/create',
+      type: 'blogs/set',
       payload: initialBlogs
     };
 
     deepFreeze(state);
-    const newState = blogsReducer(state, action);
+    const newState: BlogsSliceState[] = blogsReducer(state, action);
 
     expect(newState).toHaveLength(initialBlogs.length);
     expect(newState).toEqual(initialBlogs);
   });
 
-  test('returns new state with action blogs/create', () => {
+  test('returns new state with action blogs/add', () => {
     const state: BlogsSliceState[] = [];
     const action = {
-      type: 'blogs/create',
+      type: 'blogs/add',
       payload: initialBlogs[0],
     };
 
     deepFreeze(state);
-    const newState = blogsReducer(state, action);
+    const newState: BlogsSliceState[] = blogsReducer(state, action);
 
     expect(newState).toHaveLength(1);
     expect(newState).toContainEqual(action.payload);
@@ -121,7 +121,7 @@ describe('blogReducer', () => {
   test('returns updated state with action blogs/update', () => {
     const state: BlogsSliceState[] = initialBlogs.slice(0, 4);
 
-    const blogToUpdate = { ...initialBlogs[0], likes: 20 };
+    const blogToUpdate: BlogsSliceState = { ...initialBlogs[0], likes: 20 };
 
     const action = {
       type: 'blogs/update',
@@ -129,7 +129,7 @@ describe('blogReducer', () => {
     };
 
     deepFreeze(state);
-    const newState = blogsReducer(state, action);
+    const newState: BlogsSliceState[] = blogsReducer(state, action);
 
     expect(newState).toHaveLength(4);
     expect(newState).toContainEqual(blogToUpdate);
@@ -144,7 +144,7 @@ describe('blogReducer', () => {
     };
 
     deepFreeze(state);
-    const newState = blogsReducer(state, action);
+    const newState: BlogsSliceState[] = blogsReducer(state, action);
 
     expect(newState).toHaveLength(initialBlogs.length - 1);
     expect(newState).not.toContainEqual(initialBlogs[2]);

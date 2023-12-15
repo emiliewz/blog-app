@@ -1,10 +1,12 @@
 import { useAppSelector } from '../app/hooks';
 import { Link, useParams } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import { UsersSliceState } from '../app/types';
 
 const User = () => {
   const { id } = useParams<{ id?: string }>();
-  const user = useAppSelector(({ users }) => users.find(u => u.id === id));
+
+  const user: UsersSliceState | undefined = useAppSelector(({ users }) => users.find(u => u.id === id));
 
   if (!user) return null;
 
