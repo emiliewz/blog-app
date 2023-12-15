@@ -5,6 +5,7 @@ import { initializeUsers } from '../reducers/users';
 import { initializeUser, logOut } from '../reducers/user';
 import { initializeBlogs } from '../reducers/blogs';
 import { notify } from '../reducers/info';
+import axios from 'axios';
 
 type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
@@ -52,4 +53,18 @@ export const useLogOut = () => {
   return () => {
     dispatch(logOut());
   };
+};
+
+export const handleError = (error: unknown): string => {
+  let message: string = '';
+  if (axios.isAxiosError(error)) {
+    message = error.response
+      ? error.response.data.error
+      : error.request
+        ? error.request
+        : error.message;
+  } else if (error instanceof Error) {
+    message = error.message;
+  }
+  return message;
 };
