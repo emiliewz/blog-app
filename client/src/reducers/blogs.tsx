@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BaseBlog, BlogsSliceState } from '../app/types';
 import blogsService from '../services/blogs';
 import { AppThunk } from '../app/store';
@@ -33,14 +33,12 @@ export const initializeBlogs = (): AppThunk => {
   };
 };
 
-export const createBlog = createAsyncThunk(
-  'blogs/createBlog',
-  async (object: BaseBlog) => {
+export const createBlog = (object: BaseBlog): AppThunk => {
+  return async dispatch => {
     const blog: BlogsSliceState = await blogsService.create(object);
-    add(blog);
-    return blog as BlogsSliceState;
-  }
-);
+    dispatch(add(blog));
+  };
+};
 
 export const updateBlog = (object: BlogsSliceState): AppThunk => {
   return async disptach => {

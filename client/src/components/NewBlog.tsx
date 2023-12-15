@@ -1,29 +1,36 @@
 import { Button, Form } from 'react-bootstrap';
-import { useAppDispatch, useField, useNotification } from '../app/hooks';
+import { handleError, useAppDispatch, useField, useNotification } from '../app/hooks';
 import { FormEvent, FormEventHandler } from 'react';
 import { createBlog } from '../reducers/blogs';
+import { useNavigate } from 'react-router-dom';
 
 const NewBlog = () => {
   const dispatch = useAppDispatch();
+  const notifyWith = useNotification();
+  const navigate = useNavigate();
   const title = useField('text');
   const author = useField('text');
   const url = useField('text');
-  const notifyWith = useNotification();
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const blog = {
       title: title.value,
       author: author.value,
       url: url.value
     };
-    dispatch(createBlog(blog)).unwrap().catch(error => notifyWith(error.message)
-    );
+    try {
+      await dispatch(createBlog(blog));
+      notifyWith(`a new blog by ${blog.author} added`);
+    } catch (error: unknown) {
+      notifyWith(handleError(error));
+    }
+    navigate('/');
   };
 
   return (
     <>
-      <h2>Create a new blog</h2>
+      <h2>Add a new blog</h2>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group>
