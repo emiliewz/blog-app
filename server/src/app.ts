@@ -5,6 +5,7 @@ import loginRouter from './controllers/login';
 import mongoose from 'mongoose';
 import config from './utils/config';
 import cors from 'cors';
+import path from 'path';
 import { errorHandler, tokenExtractor, unknownEndPoint } from './utils/middleware';
 
 const app = express();
@@ -29,6 +30,12 @@ app.use('/api/users', usersRouter);
 
 app.get('/version', (_req, res) => {
   res.send('1');
+});
+
+app.use(express.static(__dirname + '/../dist'));
+
+app.get('/*', function (_req, res) {
+  res.sendFile(path.join(__dirname + '/../dist/index.html'));
 });
 
 app.use(unknownEndPoint);
