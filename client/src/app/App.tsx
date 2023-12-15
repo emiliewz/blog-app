@@ -3,7 +3,7 @@ import { useAppDispatch } from './hooks';
 import { initializeBlogs } from '../reducers/blogs';
 import { Link, Route, Routes } from 'react-router-dom';
 import { initializeUsers } from '../reducers/users';
-import { set as setUser } from '../reducers/user';
+import { initializeUser } from '../reducers/user';
 
 import LoginForm from '../components/LoginForm';
 import Blogs from '../components/Blogs';
@@ -11,7 +11,6 @@ import Blog from '../components/Blog';
 import User from '../components/User';
 import Users from '../components/Users';
 
-import storageService from '../services/storage';
 import Notification from '../components/Notification';
 import RegisterForm from '../components/RegisterForm';
 import NewBlog from '../components/NewBlog';
@@ -22,9 +21,7 @@ const App = () => {
   useEffect(() => {
     dispatch(initializeBlogs());
     dispatch(initializeUsers());
-
-    const user = storageService.getUser();
-    dispatch(setUser(user));
+    dispatch(initializeUser());
   }, []);
 
   return (
