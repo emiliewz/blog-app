@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useAppSelector, useInitialization } from './hooks';
+import { useAppSelector, useInitialization, useLogOut, useNotification } from './hooks';
 import { Link, Route, Routes } from 'react-router-dom';
 
 import LoginForm from '../components/LoginForm';
@@ -11,13 +11,20 @@ import Users from '../components/Users';
 import Notification from '../components/Notification';
 import RegisterForm from '../components/RegisterForm';
 import NewBlog from '../components/NewBlog';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Button, Container, Nav, Navbar } from 'react-bootstrap';
 
 const App = () => {
   const initializer = useInitialization();
+  const logOut = useLogOut();
+  const notifyWith = useNotification();
   const user = useAppSelector(({ user }) => user);
 
   useEffect(() => initializer(), []);
+
+  const handleClick = () => {
+    logOut();
+    notifyWith(`${user?.name} log out`);
+  };
 
   return (
     <div className='container'>
@@ -39,6 +46,7 @@ const App = () => {
               <Navbar.Text>
                 Signed in as: {user?.name}
               </Navbar.Text>
+              <Button className='ms-2' variant='outline-success' onClick={handleClick}>LogOut</Button>
             </Navbar.Collapse>
             <Navbar.Toggle />
           </>)}
