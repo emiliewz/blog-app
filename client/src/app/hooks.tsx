@@ -7,7 +7,13 @@ type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-export const useField = (type: string) => {
+type FieldEntry = {
+  type: string,
+  value: string,
+  onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void,
+};
+
+export const useField = (type: string): FieldEntry => {
   const [value, setValue] = useState<string>('');
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
