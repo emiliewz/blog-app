@@ -1,9 +1,8 @@
 import { FormEvent, FormEventHandler } from 'react';
 import { useAppDispatch, useField } from '../app/hooks';
-import storageService from '../services/storage';
-import loginService from '../services/login';
 import { Button, Form } from 'react-bootstrap';
-import { set } from '../reducers/user';
+import { loginWith } from '../reducers/user';
+import { LoginEntry } from '../app/types';
 
 const LoginForm = () => {
   const username = useField('text');
@@ -12,16 +11,11 @@ const LoginForm = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const user = await loginService.login({
-        username: username.value,
-        password: password.value
-      });
-      storageService.saveUser(user);
-      dispatch(set(user));
-    } catch (exception) {
-      console.log('wrong username or password');
-    }
+    const credentials: LoginEntry = {
+      username: username.value,
+      password: password.value
+    };
+    dispatch(loginWith(credentials));
   };
 
   return (
