@@ -1,11 +1,16 @@
 import axios from 'axios';
-import storageService from './storage';
 import { BaseBlog, BlogsSliceState } from '../app/types';
 
 const baseUrl = '/api/blogs';
 
-const headers = {
-  'Authorization': `Bearer ${storageService.getUser()?.token}`
+type Headers = {
+  Authorization: string
+};
+
+let headers: Headers = {} as Headers;
+
+const setHearders = (token: string) => headers = {
+  Authorization: `Bearer ${token}`
 };
 
 const getAll = async () => {
@@ -34,5 +39,5 @@ const remove = async (id: string) => {
 };
 
 export default {
-  getAll, create, update, comment, remove
+  getAll, create, update, comment, remove, setHearders
 };
