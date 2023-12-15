@@ -19,7 +19,7 @@ const userSlice = createSlice({
   }
 });
 
-const { set } = userSlice.actions;
+const { set, clear } = userSlice.actions;
 
 export const initializeUser = (): AppThunk => {
   return async dispatch => {
@@ -35,5 +35,13 @@ export const loginWith = (credentials: LoginEntry): AppThunk => {
     dispatch(set(user));
   };
 };
+
+export const logOut = (): AppThunk => {
+  return async dispatch => {
+    storageService.clearUser();
+    dispatch(clear());
+  };
+};
+
 
 export default userSlice.reducer;
