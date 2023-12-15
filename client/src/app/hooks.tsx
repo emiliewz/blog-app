@@ -12,9 +12,12 @@ export const useAppDispatch: DispatchFunc = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 type FieldEntry = {
-  type: string,
-  value: string,
-  onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void,
+  field: {
+    type: string,
+    value: string,
+    onChange: ({ target }: React.ChangeEvent<HTMLInputElement>) => void,
+  },
+  setValue: React.Dispatch<React.SetStateAction<string>>
 };
 
 export const useField = (type: string): FieldEntry => {
@@ -25,9 +28,11 @@ export const useField = (type: string): FieldEntry => {
   };
 
   return {
-    type,
-    value,
-    onChange
+    field: {
+      type,
+      value,
+      onChange
+    }, setValue
   };
 };
 
