@@ -15,9 +15,9 @@ const NewBlog = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const blog = {
-      title: title.value,
-      author: author.value,
-      url: url.value
+      title: title.field.value,
+      author: author.field.value,
+      url: url.field.value
     };
     try {
       await dispatch(createBlog(blog));
@@ -38,21 +38,21 @@ const NewBlog = () => {
           <Form.Control
             id='blog-title'
             placeholder='title'
-            {...title}
+            {...title.field}
           />
 
           <Form.Label>author:</Form.Label>
           <Form.Control
             id='blog-author'
             placeholder='author'
-            {...author}
+            {...author.field}
           />
 
           <Form.Label>url:</Form.Label>
           <Form.Control
             id='blog-url'
             placeholder='url'
-            {...url}
+            {...url.field}
           />
           <Button variant='primary' type='submit'>create</Button>
         </Form.Group>

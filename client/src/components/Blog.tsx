@@ -42,8 +42,9 @@ const Blog = () => {
   const handleComment: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await dispatch(commentBlog(comment.value, blog));
+      await dispatch(commentBlog(comment.field.value, blog));
       notifyWith(`A comment added for blog ${blog.title}`);
+      comment.setValue('');
     } catch (error: unknown) {
       notifyWith(handleError(error));
     }
@@ -80,7 +81,7 @@ const Blog = () => {
           {user && <Form onSubmit={handleComment}>
             <Form.Group>
               <Form.Control
-                {...comment}
+                {...comment.field}
               />
               <Button className='mt-2' variant='secondary' type='submit'>add comment</Button>
             </Form.Group>

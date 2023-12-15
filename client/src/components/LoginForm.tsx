@@ -15,8 +15,8 @@ const LoginForm = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const credentials: LoginEntry = {
-      username: username.value,
-      password: password.value
+      username: username.field.value,
+      password: password.field.value
     };
     try {
       await dispatch(loginWith(credentials));
@@ -35,13 +35,13 @@ const LoginForm = () => {
           <Form.Label>username:</Form.Label>
           <Form.Control
             id='username'
-            {...username}
+            {...username.field}
           />
 
           <Form.Label>password:</Form.Label>
           <Form.Control
             id='password'
-            {...password}
+            {...password.field}
           />
 
           <Button id='login-button' type='submit' variant='primary'>

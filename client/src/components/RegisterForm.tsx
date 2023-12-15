@@ -15,9 +15,9 @@ const RegisterForm = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user = {
-      name: name.value,
-      username: username.value,
-      password: password.value
+      name: name.field.value,
+      username: username.field.value,
+      password: password.field.value
     };
     try {
       await dispatch(createUser(user));
@@ -34,22 +34,22 @@ const RegisterForm = () => {
 
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label>name:</Form.Label>
-          <Form.Control
-            id='name'
-            {...name}
-          />
-
           <Form.Label>username:</Form.Label>
           <Form.Control
             id='username'
-            {...username}
+            {...username.field}
+          />
+
+          <Form.Label>name:</Form.Label>
+          <Form.Control
+            id='name'
+            {...name.field}
           />
 
           <Form.Label>password:</Form.Label>
           <Form.Control
             id='password'
-            {...password}
+            {...password.field}
           />
 
           <Button id='register-button' type='submit' variant='primary'>
