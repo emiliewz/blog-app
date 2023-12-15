@@ -8,7 +8,7 @@
     "start": "NODE_ENV=PRODUCTION ts-node build/index.js",
     "dev": "NODE_ENV=DEVELOPMENT ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
-    "build:ui": "rm -rf dist && cd ../client && npm run build && cp -r dist ../server",
+    "build:ui": "rm -rf dist && cd ../client && npm i && npm run build && cp -r dist ../server",
     "test": "NODE_ENV=test jest --verbose --runInBand"
   },
   "keywords": [],
