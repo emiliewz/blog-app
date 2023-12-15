@@ -13,7 +13,7 @@ defaults:
     working-directory: ./server
 jobs:
   simple_deployment_pipeline:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -23,3 +23,24 @@ jobs:
         run: npm install && cd ../client && npm install
       - name: Check style
         run: npm run lint
+      - name: build
+        run: npm run build:ui
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+          envkey_MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          envkey_SECRET: ${{ secrets.SECRET }}
+          envkey_PORT: ${{ secrets.PORT }}
+          file_name: .env
+          directory: server
+          fail_on_empty: false
+          sort_keys: false
+      - name: test
+        run:  npm run test --verbose --maxWorkers=2 --runInBand
+      - name: Deploy
+        if: ${{ github.ref == 'refs/heads/main' }} && ${{ github.event_name == 'push' }}
+        env:
+          deploy_url: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run:
+          curl "$deploy_url"
