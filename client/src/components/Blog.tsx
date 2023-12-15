@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector, useField } from '../app/hooks';
-import { useParams } from 'react-router-dom';
+import { handleError, useAppDispatch, useAppSelector, useField, useNotification } from '../app/hooks';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, Form, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { commentBlog, removeBlog, updateBlog } from '../reducers/blogs';
 import { FormEvent, FormEventHandler } from 'react';
@@ -11,24 +11,42 @@ const Blog = () => {
   const comment = useField('text');
 
   const dispatch = useAppDispatch();
+  const notifyWith = useNotification();
+  const navigate = useNavigate();
 
   if (!blog) return null;
 
-  const removeOne = () => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-      dispatch(removeBlog(blog.id));
+  const removeOne = async () => {
+    if (window.confirm(`Do you want to remove blog ${blog.title} by ${blog.author}`)) {
+      try {
+        await dispatch(removeBlog(blog.id));
+        notifyWith(`The blog by ${blog.author} has been deleted successfully.`);
+        navigate('/');
+      } catch (error: unknown) {
+        notifyWith(handleError(error));
+      }
     }
   };
 
   const likeOne = async () => {
-    dispatch(updateBlog({ ...blog, likes: blog.likes + 1 }));
+    try {
+      await dispatch(updateBlog({ ...blog, likes: blog.likes + 1 }));
+      notifyWith(`The blog by ${blog.author} has been liked successfully.`);
+    } catch (error: unknown) {
+      notifyWith(handleError(error));
+    }
   };
 
   const canRemove: boolean = user?.username === blog.user.username;
 
-  const handleComment: FormEventHandler<HTMLFormElement> = (event: FormEvent<HTMLFormElement>) => {
+  const handleComment: FormEventHandler<HTMLFormElement> = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(commentBlog(comment.value, blog));
+    try {
+      await dispatch(commentBlog(comment.value, blog));
+      notifyWith(`A comment added for blog ${blog.title}`);
+    } catch (error: unknown) {
+      notifyWith(handleError(error));
+    }
   };
 
   return (
