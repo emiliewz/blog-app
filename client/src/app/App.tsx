@@ -19,6 +19,7 @@ const App = () => {
   const notifyWith = useNotification();
   const user = useAppSelector(({ user }) => user);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => initializer(), []);
 
   const handleClick = () => {
