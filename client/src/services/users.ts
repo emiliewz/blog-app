@@ -12,7 +12,13 @@ const create = async (object: UserEntry) => {
   return result.data;
 };
 
+const check = async (headers: object) => {
+  const result = await axios.get(`${baseUrl}/check`, { headers });
+  return result.data;
+};
+
 export default {
   getAll,
-  create
+  create,
+  check
 };
