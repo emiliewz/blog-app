@@ -9,7 +9,7 @@ type Headers = {
 
 let headers: Headers = {} as Headers;
 
-const setHearders = (token: string) => headers = {
+const setHeaders = (token: string) => headers = {
   Authorization: `Bearer ${token}`
 };
 
@@ -39,5 +39,5 @@ const remove = async (id: string) => {
 };
 
 export default {
-  getAll, create, update, comment, remove, setHearders
+  getAll, create, update, comment, remove, setHeaders
 };
