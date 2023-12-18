@@ -7,6 +7,7 @@ import { initializeUser, logOut } from '../reducers/user';
 import { initializeBlogs } from '../reducers/blogs';
 import { notify } from '../reducers/info';
 import axios from 'axios';
+import { BlogsSliceState } from './types';
 
 type DispatchFunc = () => AppDispatch;
 export const useAppDispatch: DispatchFunc = useDispatch;
@@ -74,3 +75,5 @@ export const handleError = (error: unknown): string => {
   }
   return message;
 };
+
+export const byLikes = (a: BlogsSliceState, b: BlogsSliceState): number => b.likes - a.likes;
