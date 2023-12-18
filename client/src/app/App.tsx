@@ -12,6 +12,7 @@ import Notification from '../components/Notification';
 import RegisterForm from '../components/RegisterForm';
 import NewBlog from '../components/NewBlog';
 import { Button, Container, Nav, Navbar } from 'react-bootstrap';
+import Account from '../components/Account';
 
 const App = () => {
   const initializer = useInitialization();
@@ -36,7 +37,8 @@ const App = () => {
             <Nav className='me-auto'>
               <Nav.Link as={Link} to='/'>Blogs</Nav.Link>
               {user && <><Nav.Link as={Link} to='/create'>Add</Nav.Link>
-                <Nav.Link as={Link} to='/users'>Users</Nav.Link></>}
+                <Nav.Link as={Link} to='/users'>Users</Nav.Link>
+                <Nav.Link as={Link} to='/account'>My Account</Nav.Link></>}
               {!user && (<><Nav.Link as={Link} to='/login'>Login</Nav.Link>
                 <Nav.Link as={Link} to='/register'>Register</Nav.Link></>)}
             </Nav>
@@ -63,6 +65,7 @@ const App = () => {
         <Route path='/create' element={<NewBlog />} />
         <Route path='/login' element={<LoginForm />} />
         <Route path='/register' element={<RegisterForm />} />
+        <Route path='/account' element={<Account />} />
       </Routes>
     </div >
   );
