@@ -78,3 +78,4 @@ export const handleError = (error: unknown): string => {
 
 export const byLikes = (a: BlogsSliceState, b: BlogsSliceState): number => b.likes - a.likes;
 export const byComments = (a: BlogsSliceState, b: BlogsSliceState): number => b.comments.length - a.comments.length;
+export const byCreateDate = (a: BlogsSliceState, b: BlogsSliceState): number => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
