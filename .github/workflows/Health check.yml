@@ -8,7 +8,8 @@ on:
     branches: [main]
     types: [opened, synchronize]
   schedule:
-    - cron: '30 3-22 * * *'
+    - cron: '0,30 11-23 * * *'
+    - cron: '0,30 0-6 * * *'
 
 jobs:
   periodic-health-check:
