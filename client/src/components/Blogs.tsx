@@ -10,12 +10,12 @@ const Blogs = () => {
 
   const blogsSorted = () => {
     switch (sort) {
-    case 'Likes':
-      return [...blogs].sort(byLikes);
-    case 'Comments':
-      return [...blogs].sort(byComments);
-    default:
-      return [...blogs].sort(byComments);
+      case 'Likes':
+        return [...blogs].sort(byLikes);
+      case 'Comments':
+        return [...blogs].sort(byComments);
+      default:
+        return [...blogs].sort(byComments);
     }
   };
 
