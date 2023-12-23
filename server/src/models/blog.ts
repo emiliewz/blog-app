@@ -24,7 +24,7 @@ const blogSchema = new Schema<IBlog>({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-});
+}, { timestamps: true });
 
 blogSchema.set('toJSON', {
   transform: (_document, returnedObject: Record<string, unknown>) => {

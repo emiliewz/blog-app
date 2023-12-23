@@ -17,7 +17,7 @@ const userSchema = new Schema<IUser>({
       ref: 'Blog'
     }
   ]
-});
+}, { timestamps: true });
 
 userSchema.plugin(uniqueValidator);
 
