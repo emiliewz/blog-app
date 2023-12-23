@@ -7,19 +7,25 @@ const initialUsers: UsersSliceState[] = [
     name: 'Alice',
     username: 'alice',
     id: '0',
-    blogs: []
+    blogs: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Bob',
     username: 'bob',
     id: '1',
-    blogs: []
+    blogs: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     name: 'Charles',
     username: 'charles',
     id: '2',
-    blogs: []
+    blogs: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ];
 

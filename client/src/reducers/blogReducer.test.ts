@@ -13,9 +13,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Alice',
       username: 'alice',
       id: '0',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     id: '1',
@@ -27,9 +31,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Alice',
       username: 'alice',
       id: '0',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     id: '2',
@@ -41,9 +49,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Bob',
       username: 'bob',
       id: '1',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     id: '3',
@@ -55,9 +67,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Bob',
       username: 'bob',
       id: '1',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     id: '4',
@@ -69,9 +85,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Charles',
       username: 'charles',
       id: '2',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   },
   {
     id: '5',
@@ -83,9 +103,13 @@ const initialBlogs: BlogsSliceState[] = [
       name: 'Charles',
       username: 'charles',
       id: '2',
-      blogs: []
+      blogs: [],
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
-    comments: []
+    comments: [],
+    createdAt: new Date(),
+    updatedAt: new Date()
   }
 ];
 
